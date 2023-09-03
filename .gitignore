@@ -1,7 +1,11 @@
 node_modules/
 
 outputs/
+test-filename/
+custom-outputs/
+coverage/
 
 dist/
 
 .vscode/
+

@@ -1,4 +1,4 @@
-import { createWriteStream } from 'fs';
+import fs from 'fs';
 import { join } from 'path';
 
 export interface SaveFileUseCase {
@@ -18,19 +18,18 @@ export class SaveFile implements SaveFileUseCase {
     fileContent,
     destination = 'outputs',
     fileName = 'table',
-  }: SaveFileOptions) {
+  }: SaveFileOptions): boolean {
     //if file does not exist, it will be created
 
     try {
-      const output = createWriteStream(join(destination, `${fileName}.txt`));
-
-      output.write(fileContent);
-      output.end();
+      fs.mkdirSync(destination, { recursive: true });
+      fs.writeFileSync(`${destination}/${fileName}.txt`, fileContent);
+      console.log('File Created!');
       //wait 2 seconds for console log
-        setTimeout(() => console.log('File created'), 500);
+        // setTimeout(() => console.log('File created'), 500);
       return true;
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       return false;
     }
   }
